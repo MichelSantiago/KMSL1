@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <style>
+<style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -17,32 +17,19 @@
             margin: 0;
             background: linear-gradient(135deg, #007BFF, #00BFFF, #0056b3);
         }
-        .login-container {
+        .painel-container {
             background: #ffffff;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             text-align: center;
         }
         h2 {
             color: #0056b3;
         }
-        label {
-            display: block;
-            margin-top: 10px;
-            text-align: left;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        button {
+        .botao {
             width: 100%;
             background-color: #007BFF;
             color: white;
@@ -51,28 +38,22 @@
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        button:hover {
+        .botao:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>     
-        <!-- Formulário de login -->
-        <form action="index.jsp" method="post">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="button" onclick="window.location.href='painel.jsp'">Login</button>
-            <button type="button" onclick="window.location.href='cadUsuario.jsp'">Cadastrar</button>
-        </form>
+    <div class="painel-container">
+        <h2>Painel Principal</h2>
+        <!-- Opções do painel principal -->
+        <button class="botao" onclick="window.location.href='cadProd.jsp'">Cadastro de Produto</button>
+        <button class="botao" onclick="window.location.href='consulta.jsp'">Consulta de Produto</button>
+        <button class="botao" onclick="window.location.href='alteracao.jsp'">Alteração de Produto</button>
+        <button class="botao" onclick="window.location.href='excluir.jsp'">Exclusão de Produto</button>
     </div>
 </body>
-
+</body>
 </html>

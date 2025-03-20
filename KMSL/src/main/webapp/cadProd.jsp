@@ -31,18 +31,19 @@
         }
         label {
             display: block;
-            margin-top: 10px;
+            margin-bottom: 8px;
             text-align: left;
+            color: #333;
         }
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
         }
-        button {
+        .botao {
             width: 100%;
             background-color: #007BFF;
             color: white;
@@ -51,35 +52,47 @@
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        button:hover {
+        .botao:hover {
             background-color: #0056b3;
         }
+        .mensagem {
+            margin-top: 10px;
+            font-size: 14px;
+            color: green;
+        }
     </style>
-    </head>
+    <script>
+        function exibirMensagem(sucesso) {
+            let mensagemDiv = document.getElementById("mensagem");
+            if (sucesso) {
+                mensagemDiv.innerHTML = "Produto cadastrado com sucesso!";
+                mensagemDiv.style.color = "green";
+            } else {
+                mensagemDiv.innerHTML = "Erro ao cadastrar produto!";
+                mensagemDiv.style.color = "red";
+            }
+        }
+    </script>
+</head>
 <body>
     <div class="cadastro-container">
-        <h2>Cadastro de Usuário</h2>     
-        <form action="Cad_Usuario.jsp" method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+        <h2>Cadastro de Produto</h2>
+        <form action="/cadastrarProduto" method="post" onsubmit="exibirMensagem(true); return false;">
+            <label for="codigo">Código do Produto:</label>
+            <input type="text" id="codigo" name="codigo" required>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao" required>
 
-            <label for="cidade">Cidade:</label>
-            <input type="text" id="cidade" name="cidade" required>
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" required>
 
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required>
-            
-            <button type="submit">Cadastrar</button>
-            
-            <button type="button" onclick="window.location.href='index.jsp'">Voltar</button>
+            <button class="botao" type="submit">Cadastrar Produto</button>
+            <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
         </form>
+        <div id="mensagem" class="mensagem"></div>
     </div>
 </body>
-</body>
-
 </html>

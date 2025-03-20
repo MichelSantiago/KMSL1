@@ -17,7 +17,7 @@
             margin: 0;
             background: linear-gradient(135deg, #007BFF, #00BFFF, #0056b3);
         }
-        .cadastro-container {
+        .consulta-container {
             background: #ffffff;
             padding: 40px;
             border-radius: 12px;
@@ -31,18 +31,19 @@
         }
         label {
             display: block;
-            margin-top: 10px;
+            margin-bottom: 8px;
             text-align: left;
+            color: #333;
         }
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
         }
-        button {
+        .botao {
             width: 100%;
             background-color: #007BFF;
             color: white;
@@ -51,35 +52,41 @@
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        button:hover {
+        .botao:hover {
             background-color: #0056b3;
         }
+        .resultado {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+        }
     </style>
-    </head>
+    <script>
+        function consultarProduto() {
+            let termoBusca = document.getElementById("termoBusca").value;
+            let resultadoDiv = document.getElementById("resultado");
+            
+            // Simulação de busca
+            if (termoBusca === "123") {
+                resultadoDiv.innerHTML = "<strong>Código:</strong> 123<br><strong>Descrição:</strong> Produto Exemplo<br><strong>Quantidade:</strong> 50";
+            } else {
+                resultadoDiv.innerHTML = "Produto não encontrado.";
+            }
+        }
+    </script>
+</head>
 <body>
-    <div class="cadastro-container">
-        <h2>Cadastro de Usuário</h2>     
-        <form action="Cad_Usuario.jsp" method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
-
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="cidade">Cidade:</label>
-            <input type="text" id="cidade" name="cidade" required>
-
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required>
-            
-            <button type="submit">Cadastrar</button>
-            
-            <button type="button" onclick="window.location.href='index.jsp'">Voltar</button>
-        </form>
+    <div class="consulta-container">
+        <h2>Consulta de Produto</h2>
+        <label for="termoBusca">Código ou Descrição:</label>
+        <input type="text" id="termoBusca" name="termoBusca" required>
+        <button class="botao" type="button" onclick="consultarProduto()">Buscar</button>
+        <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
+        <div id="resultado" class="resultado"></div>
     </div>
 </body>
 </body>
-
 </html>
