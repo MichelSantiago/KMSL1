@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kmsl.conexao.ConexaoDB;
+
 @WebServlet("/ConsultaServlet")
 public class Consulta extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class Consulta extends HttpServlet {
         
         String busca = request.getParameter("busca");
         
-        try (Connection conexao = ConexaoDB.conectar()) {
+        try (Connection conexao = ConexaoDB.conexao()) {
             String sql = "SELECT * FROM produtos WHERE codigo = ? OR descricao LIKE ?";
             try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
                 stmt.setString(1, busca);

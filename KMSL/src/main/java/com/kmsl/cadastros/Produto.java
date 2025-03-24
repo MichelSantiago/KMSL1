@@ -1,17 +1,11 @@
-package com.kmsl.model;
+package com.kmsl.cadastros;
 
 public class Produto {
     private int codigo;
     private String descricao;
     private int quantidade;
 
-    // Construtor
-    public Produto(int codigo, String descricao, int quantidade) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.quantidade = quantidade;
-    }
-
+   
     // Getters e Setters
     public int getCodigo() {
         return codigo;

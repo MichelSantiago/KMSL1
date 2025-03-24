@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kmsl.conexao.ConexaoDB;
+
 @WebServlet("/AltProdServlet")
 public class AltProd extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -29,7 +31,7 @@ public class AltProd extends HttpServlet {
         
         int quantidade = Integer.parseInt(quantidadeStr);
         
-        try (Connection conexao = ConexaoDB.conectar()) {
+        try (Connection conexao = ConexaoDB.conexao()) {
             String sql = "UPDATE produtos SET descricao = ?, quantidade = ? WHERE codigo = ?";
             try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
                 stmt.setString(1, descricao);

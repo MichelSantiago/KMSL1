@@ -1,10 +1,16 @@
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection" %>
+ 
+ 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Cadastro de produto</title>
 </head>
 <body>
 <style>
@@ -94,5 +100,28 @@
         </form>
         <div id="mensagem" class="mensagem"></div>
     </div>
+    <%
+    //variaveis que vao receber valores no banco
+   try{
+    int codigo , quantidade;
+    String descricao;
+    codigo = Integer.parseInt(request.getParameter("codigo"));
+    descricao =request.getParameter("quantidade");
+    quantidade = Integer.parseInt(request.getParameter("quantidade"));
+ 	//conexao banco 
+    Connection conexao;
+    PreparedStatement st;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb","root,","Michel*150198");
+    //iserir dados na tabela
+    st = conexao.prepareStatement("INSERT INTO produtos VALUES(?,?,?)");
+    st.setInt(1, codigo);
+    st.setString(2, descricao);
+    st.setInt(3, quantidade);
+    st.executeUpdate();
+   } catch (Exception x){
+    	out.print("Mensagem de erro:"+ x.getMessage());
+    }
+    %>
 </body>
 </html>

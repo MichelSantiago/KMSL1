@@ -1,10 +1,14 @@
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Exclusão de produto</title>
 </head>
 <body>
 <style>
@@ -88,5 +92,23 @@
         <div id="mensagem" class="mensagem"></div>
     </div>
 </body>
+	<%
+	int cod;
+	cod=Integer.parseInt(request.getParameter("codigoProduto"));
+	try{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb","root,","Michel*150198");
+		PreparedStatement st = conexao.prepareStatement("DELETE FROM produtos WHERE codigo_produto=?");
+		st.setInt(1, cod);
+	int resultado = st.executeUpdate();
+		if(resultado == 0){
+		out.print("Este produto não está cadastrado");
+	}else {
+		out.print("O produto foi excluído com sucesso");
+	}
+		} catch (Exception x){
+		out.print("Mensagem de erro:"+ x.getMessage());
+		}
+	%>
 </body>
 </html>

@@ -1,10 +1,14 @@
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Cadastro de usuário</title>
 </head>
 <body>
 <style>
@@ -57,6 +61,18 @@
             background-color: #0056b3;
         }
     </style>
+    <script>
+        function exibirMensagem(sucesso) {
+            let mensagemDiv = document.getElementById("mensagem");
+            if (sucesso) {
+                mensagemDiv.innerHTML = "Usuario cadastrado com sucesso!";
+                mensagemDiv.style.color = "green";
+            } else {
+                mensagemDiv.innerHTML = "Erro ao cadastrar o usuário!";
+                mensagemDiv.style.color = "red";
+            }
+        }
+    </script>
     </head>
 <body>
     <div class="cadastro-container">
@@ -74,12 +90,37 @@
             <label for="estado">Estado:</label>
             <input type="text" id="estado" name="estado" required>
             
-            <button type="submit">Cadastrar</button>
-            
+            <button class="botao" type="submit">Cadastrar usuário</button>
             <button type="button" onclick="window.location.href='index.jsp'">Voltar</button>
         </form>
     </div>
 </body>
+<%
+	try{
+    //variaveis que vao receber valores no banco
+    	String nome , email , cidade ,estado;
+		nome =request.getParameter("nome");
+		email =request.getParameter("email");
+		cidade =request.getParameter("cidade");
+    	estado =request.getParameter("estado");
+    
+ 	//conexao banco 
+  	  Connection conexao;
+      PreparedStatement st;
+  	  Class.forName("com.mysql.cj.jdbc.Driver");
+  	  conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb","root,","Michel*150198");
+    //iserir dados na tabela
+    	st = conexao.prepareStatement("INSERT INTO usuario VALUES(?,?,?)");
+    	st.setString(1, nome);
+    	st.setString(2, email);
+    	st.setString(3, cidade);
+    	st.setString(4, estado);
+    	st.executeUpdate();
+	} catch (Exception x){
+    		out.print("Mensagem de erro:"+ x.getMessage());
+		}
+	
+    %>
 </body>
 
 </html>

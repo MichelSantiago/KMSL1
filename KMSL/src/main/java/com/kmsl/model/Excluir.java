@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kmsl.conexao.ConexaoDB;
+
 @WebServlet("/ExcluirServlet")
 public class Excluir extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -18,7 +20,7 @@ public class Excluir extends HttpServlet {
         String codigoProduto = request.getParameter("codigoProduto");
         
         if (codigoProduto != null && !codigoProduto.isEmpty()) {
-            try (Connection conexao = ConexaoDB.conectar()) {
+            try (Connection conexao = ConexaoDB.conexao()) {
                 String sql = "DELETE FROM produtos WHERE codigo = ?";
                 try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
                     stmt.setString(1, codigoProduto);

@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="configura.css"> 
+<title>Login</title>
 </head>
-<body>
-  <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -17,32 +17,20 @@
             margin: 0;
             background: linear-gradient(135deg, #007BFF, #00BFFF, #0056b3);
         }
-        .login-container {
+        .container {
             background: #ffffff;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
             text-align: center;
+            max-width: 400px;
+            width: 100%;
         }
-        h2 {
+        h1 {
             color: #0056b3;
         }
-        label {
+        .botao {
             display: block;
-            margin-top: 10px;
-            text-align: left;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        button {
             width: 100%;
             background-color: #007BFF;
             color: white;
@@ -51,9 +39,10 @@
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 10px;
+            text-decoration: none;
         }
-        button:hover {
+        .botao:hover {
             background-color: #0056b3;
         }
     </style>

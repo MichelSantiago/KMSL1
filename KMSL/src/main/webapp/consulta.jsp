@@ -1,10 +1,15 @@
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.ResultSet"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Consulta de produto</title>
 </head>
 <body>
 <style>
@@ -88,5 +93,44 @@
         <div id="resultado" class="resultado"></div>
     </div>
 </body>
+<%
+	//recebe o nome ou codigo do produto
+	String n = request.getParameter("descrição");
+try{
+//conexao banco 
+	Connection conexao;
+	PreparedStatement st;
+  	Class.forName("com.mysql.cj.jdbc.Driver");
+  	conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb", "root,", "Michel*150198");
+//consultar dados na tabela
+	st = conexao.prepareStatement("SELECT * FROM produtos WHERE codigo_produto LIKE ?");
+	st.setString(1, "%" + n + "%");
+	ResultSet resultado = st.executeQuery();
+	%>
+	<table>
+			<tr>
+				<th>codigo</th><th>descricao</th><th>quantidade</th>
+			</tr>
+	<%	
+	while (resultado.next()){
+	%>
+		
+				<tr>
+				<td><%= resultado.getString("codigo") %></td>
+				<td><%= resultado.getString("descricao") %></td>
+				<td><%= resultado.getString("quantidade") %></td>
+				</tr>		
+		
+		<% 
+	}
+	%>
+	
+	</table>
+	<%
+} catch (Exception x){
+	out.print("Mensagem de erro:"+ x.getMessage());
+}
+
+%>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.kmsl.model;
+package com.kmsl.cadastros;
 
 public class Usuario {
     private String nome;
@@ -6,15 +6,7 @@ public class Usuario {
     private String cidade;
     private String estado;
 
-    // Construtor
-    public Usuario(String nome, String email, String cidade, String estado) {
-        this.nome = nome;
-        this.email = email;
-        this.cidade = cidade;
-        this.estado = estado;
-    }
-
-    // Getters e Setters
+   // Getters e Setters
     public String getNome() {
         return nome;
     }

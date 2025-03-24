@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kmsl.conexao.ConexaoDB;
+
 @WebServlet("/CadProdServlet")
 public class CadProd extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -19,7 +21,7 @@ public class CadProd extends HttpServlet {
         String quantidade = request.getParameter("quantidade");
         
         if (codigo != null && descricao != null && quantidade != null && !codigo.isEmpty() && !descricao.isEmpty() && !quantidade.isEmpty()) {
-            try (Connection conexao = ConexaoDB.conectar()) {
+            try (Connection conexao = ConexaoDB.conexao()) {
                 String sql = "INSERT INTO produtos (codigo, descricao, quantidade) VALUES (?, ?, ?)";
                 try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
                     stmt.setString(1, codigo);
