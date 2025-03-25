@@ -1,17 +1,18 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection" %>
+<%@page import="java.sql.ResultSet" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Exclusão de produto</title>
-</head>
-<body>
-<style>
+    <meta charset="UTF-8">
+    <title>Exclusão de Produto</title>
+ <head>
+ 	<body>
+    <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -64,19 +65,19 @@
         .mensagem {
             margin-top: 20px;
             font-size: 14px;
-            color: #333;
-            text-align: left;
+            color: green;
+            text-align: center;
         }
     </style>
     <script>
-        function excluirProduto() {
+        function ExcluirProduto() {
             let codigoProduto = document.getElementById("codigoProduto").value;
             let mensagemDiv = document.getElementById("mensagem");
             
-            if (codigoProduto) {
-                mensagemDiv.innerHTML = "Produto excluído com sucesso!";
+            if (codigoProduto && descricao && quantidade) {
+                mensagemDiv.innerHTML = "Produto atualizado com sucesso!";
             } else {
-                mensagemDiv.innerHTML = "Informe o código do produto antes de excluir.";
+                mensagemDiv.innerHTML = "Preencha todos os campos antes de salvar.";
             }
         }
     </script>
@@ -84,31 +85,39 @@
 <body>
     <div class="exclusao-container">
         <h2>Exclusão de Produto</h2>
-        <label for="codigoProduto">Código do Produto:</label>
-        <input type="text" id="codigoProduto" name="codigoProduto" required>
-        
-        <button class="botao" type="button" onclick="excluirProduto()">Excluir Produto</button>
-        <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
-        <div id="mensagem" class="mensagem"></div>
+        <form action="excluir.jsp" method="post">
+            <label for="codigoProduto">Código do Produto:</label>
+            <input type="text" id="codigoProduto" name="codigoProduto" required>
+
+            <button class="botao" type="submit">Excluir Produto</button>
+            <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
+        </form>
+       <div id="mensagem" class="mensagem"></div>
     </div>
 </body>
-	<%
-	int cod;
-	cod=Integer.parseInt(request.getParameter("codigoProduto"));
-	try{
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb","root,","Michel*150198");
-		PreparedStatement st = conexao.prepareStatement("DELETE FROM produtos WHERE codigo_produto=?");
-		st.setInt(1, cod);
-	int resultado = st.executeUpdate();
-		if(resultado == 0){
-		out.print("Este produto não está cadastrado");
-	}else {
-		out.print("O produto foi excluído com sucesso");
-	}
-		} catch (Exception x){
-		out.print("Mensagem de erro:"+ x.getMessage());
-		}
-	%>
+<%
+String mensagem = "";
+String codStr = request.getParameter("codigoProduto");
+
+if (codStr != null && !codStr.isEmpty()) {
+    int cod = Integer.parseInt(codStr);
+    
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb", "root", "Michel*150198");
+        PreparedStatement st = conexao.prepareStatement("DELETE FROM produtos WHERE codigo_produto=?");
+        st.setInt(1, cod);
+        
+        int resultado = st.executeUpdate();
+        if (resultado == 0) {
+            mensagem = "Este produto não está cadastrado.";
+        } else {
+            mensagem = "O produto foi excluído com sucesso.";
+        }
+    } catch (Exception e) {
+        mensagem = "Erro: " + e.getMessage();
+    }
+}
+%>
 </body>
 </html>

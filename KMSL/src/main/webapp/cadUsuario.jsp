@@ -77,7 +77,7 @@
 <body>
     <div class="cadastro-container">
         <h2>Cadastro de Usuário</h2>     
-        <form action="Cad_Usuario.jsp" method="post">
+        <form action="cadUsuario.jsp" method="post">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
 

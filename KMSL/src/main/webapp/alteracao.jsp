@@ -1,6 +1,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection" %>
+<%@page import="java.sql.ResultSet" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -67,39 +68,62 @@
             color: #333;
             text-align: left;
         }
-    </style>
-    <script>
-        function alterarProduto() {
-            let codigoProduto = document.getElementById("codigoProduto").value;
-            let descricao = document.getElementById("descricao").value;
-            let quantidade = document.getElementById("quantidade").value;
-            let mensagemDiv = document.getElementById("mensagem");
-            
-            if (codigoProduto && descricao && quantidade) {
-                mensagemDiv.innerHTML = "Produto atualizado com sucesso!";
-            } else {
-                mensagemDiv.innerHTML = "Preencha todos os campos antes de salvar.";
-            }
-        }
-    </script>
+</style>
 </head>
 <body>
     <div class="alteracao-container">
         <h2>Alteração de Produto</h2>
-        <label for="codigoProduto">Código do Produto:</label>
-        <input type="text" id="codigoProduto" name="codigoProduto" required>
-        
-        <label for="descricao">Descrição:</label>
-        <input type="text" id="descricao" name="descricao" required>
-        
-        <label for="quantidade">Quantidade:</label>
-        <input type="number" id="quantidade" name="quantidade" required>
-        
-        <button class="botao" type="button" onclick="alterarProduto()">Salvar Alterações</button>
-        <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
-        <div id="mensagem" class="mensagem"></div>
+        <form action="alteracao.jsp" method="post">
+            <label for="codigoProduto">Código do Produto:</label>
+            <input type="text" id="codigoProduto" name="codigoProduto" required>
+
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" required>
+
+            <button class="botao" type="submit">Salvar Alterações</button>
+            <button class="botao" type="button" onclick="window.location.href='painel.jsp'">Voltar</button>
+        </form>
     </div>
-    
-</body>
+
+    <%
+    String mensagem = "";
+    try {
+        String codigoParam = request.getParameter("codigoProduto");
+        String descricao = request.getParameter("descricao");
+        String quantidadeParam = request.getParameter("quantidade");
+
+        if (codigoParam != null && descricao != null && quantidadeParam != null) {
+            int codigo = Integer.parseInt(codigoParam);
+            int quantidade = Integer.parseInt(quantidadeParam);
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/bancodb", "root", "Michel*150198");
+
+            PreparedStatement st = conexao.prepareStatement("UPDATE produtos SET descricao = ?, quantidade = ? WHERE codigo = ?");
+            st.setString(1, descricao);
+            st.setInt(2, quantidade);
+            st.setInt(3, codigo);
+
+            int linhasAfetadas = st.executeUpdate();
+            if (linhasAfetadas > 0) {
+                mensagem = "Produto atualizado com sucesso!";
+            } else {
+                mensagem = "Nenhum produto encontrado com esse código.";
+            }
+
+            conexao.close();
+        } else {
+            mensagem = "Preencha todos os campos!";
+        }
+    } catch (Exception e) {
+        mensagem = "Erro ao atualizar produto: " + e.getMessage();
+    }
+    %>
+
+    <div class="mensagem"><%= mensagem %></div>
+
 </body>
 </html>
